@@ -15,6 +15,9 @@
 		ABAA75FB297867A800DDD65B /* NotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75FA297867A800DDD65B /* NotesTests.swift */; };
 		ABAA7605297867A800DDD65B /* NotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA7604297867A800DDD65B /* NotesUITests.swift */; };
 		ABAA7607297867A800DDD65B /* NotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA7606297867A800DDD65B /* NotesUITestsLaunchTests.swift */; };
+		ABAA76142979D4BD00DDD65B /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76132979D4BD00DDD65B /* NotesCell.swift */; };
+		ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76172979D6D400DDD65B /* Identifiable.swift */; };
+		ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76192979FD9600DDD65B /* NoteViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		ABAA7600297867A800DDD65B /* NotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAA7604297867A800DDD65B /* NotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesUITests.swift; sourceTree = "<group>"; };
 		ABAA7606297867A800DDD65B /* NotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ABAA76132979D4BD00DDD65B /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
+		ABAA76172979D6D400DDD65B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		ABAA76192979FD9600DDD65B /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +83,11 @@
 		ABAA75D7297867A700DDD65B = {
 			isa = PBXGroup;
 			children = (
+				ABAA76162979D6BE00DDD65B /* Helpers */,
 				ABAA75E2297867A700DDD65B /* Notes */,
 				ABAA75F9297867A800DDD65B /* NotesTests */,
 				ABAA7603297867A800DDD65B /* NotesUITests */,
+				ABAA76152979D4D700DDD65B /* Supporting Files */,
 				ABAA75E1297867A700DDD65B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,12 +105,9 @@
 		ABAA75E2297867A700DDD65B /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				ABAA75E3297867A700DDD65B /* AppDelegate.swift */,
-				ABAA75E5297867A700DDD65B /* SceneDelegate.swift */,
 				ABAA75E7297867A700DDD65B /* NotesViewController.swift */,
-				ABAA75EC297867A800DDD65B /* Assets.xcassets */,
-				ABAA75EE297867A800DDD65B /* LaunchScreen.storyboard */,
-				ABAA75F1297867A800DDD65B /* Info.plist */,
+				ABAA76132979D4BD00DDD65B /* NotesCell.swift */,
+				ABAA76192979FD9600DDD65B /* NoteViewModel.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -122,6 +127,26 @@
 				ABAA7606297867A800DDD65B /* NotesUITestsLaunchTests.swift */,
 			);
 			path = NotesUITests;
+			sourceTree = "<group>";
+		};
+		ABAA76152979D4D700DDD65B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA75E3297867A700DDD65B /* AppDelegate.swift */,
+				ABAA75EE297867A800DDD65B /* LaunchScreen.storyboard */,
+				ABAA75EC297867A800DDD65B /* Assets.xcassets */,
+				ABAA75E5297867A700DDD65B /* SceneDelegate.swift */,
+				ABAA75F1297867A800DDD65B /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ABAA76162979D6BE00DDD65B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				ABAA76172979D6D400DDD65B /* Identifiable.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +281,10 @@
 			files = (
 				ABAA75E8297867A700DDD65B /* NotesViewController.swift in Sources */,
 				ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */,
+				ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */,
 				ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */,
+				ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */,
+				ABAA76142979D4BD00DDD65B /* NotesCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +455,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7TFRW3KMV7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Notes/Info.plist;
+				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
@@ -453,7 +481,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7TFRW3KMV7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Notes/Info.plist;
+				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
