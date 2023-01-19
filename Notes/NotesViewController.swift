@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  NotesViewController.swift
 //  Notes
 //
 //  Created by Margarita Slesareva on 18.01.2023.
@@ -13,7 +13,4 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
 }
-
