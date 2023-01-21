@@ -20,6 +20,7 @@
 		ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76192979FD9600DDD65B /* NoteViewModel.swift */; };
 		ABAA761C297AE12200DDD65B /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA761B297AE12200DDD65B /* NoteViewController.swift */; };
 		ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA761D297B683C00DDD65B /* ViewControllerFactory.swift */; };
+		ABAA7623297B8A9B00DDD65B /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		ABAA76192979FD9600DDD65B /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		ABAA761B297AE12200DDD65B /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		ABAA761D297B683C00DDD65B /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				ABAA76172979D6D400DDD65B /* Identifiable.swift */,
+				ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				ABAA761C297AE12200DDD65B /* NoteViewController.swift in Sources */,
 				ABAA75E8297867A700DDD65B /* NotesViewController.swift in Sources */,
 				ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */,
+				ABAA7623297B8A9B00DDD65B /* UIColor+extension.swift in Sources */,
 				ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */,
 				ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */,
 				ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */,

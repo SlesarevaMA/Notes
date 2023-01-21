@@ -7,12 +7,23 @@
 
 import UIKit
 
+private enum LocalMetrics {
+    static let plusButtonWidth: CGFloat = 50
+    static let headerHeight: CGFloat = 28
+    static let headerTitleLableXposition: CGFloat = 10
+
+    static let backgroundColor: UIColor = .init(hex: 0xFBF8E8)
+
+    static let headerTitleLable: UIFont = .systemFont(ofSize: 30)
+}
+
 final class NotesViewController: UIViewController, UITableViewDelegate {
 
     private weak var viewControllerFactory: ViewControllerFactory?
     
     private let tableView = UITableView()
-//    private var notesCells = [String]()
+    private let plusButton = UIButton()
+//    private var notes = [String]()
     private var notes = [
         "Ты снимаешь вечернее платье, стоя лицом к стене",
         "И я вижу свежие шрамы на гладкой как бархат спине",
@@ -37,17 +48,29 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     private func setup() {
         addSubviews()
         prepareTableView()
+        configureSubviews()
     }
 
     private func addSubviews() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        [tableView, plusButton].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+
+        let guide = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
+            plusButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            plusButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            plusButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+            plusButton.widthAnchor.constraint(equalTo: plusButton.heightAnchor),
+            plusButton.widthAnchor.constraint(equalToConstant: LocalMetrics.plusButtonWidth)
         ])
     }
 
@@ -56,6 +79,21 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         tableView.register(NotesCell.self, forCellReuseIdentifier: NotesCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
+    }
+
+    private func configureSubviews() {
+        view.backgroundColor = LocalMetrics.backgroundColor
+        tableView.backgroundColor = LocalMetrics.backgroundColor
+
+        plusButton.setImage(UIImage(named: "plus"), for: .normal)
+    }
+
+    @objc private func plusButtonTapped() {
+        notes.append(" ")
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -73,18 +111,18 @@ extension NotesViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 28))
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: LocalMetrics.headerHeight))
 
         let headerTitleLable = UILabel(
             frame: CGRect(
-                x: 10,
+                x: LocalMetrics.headerTitleLableXposition,
                 y: 0,
-                width: header.frame.width - 10,
+                width: header.frame.width,
                 height: header.frame.height
             )
         )
         headerTitleLable.text = "Заметки"
-        headerTitleLable.font = .systemFont(ofSize: 30)
+        headerTitleLable.font = LocalMetrics.headerTitleLable
 
         header.addSubview(headerTitleLable)
 
