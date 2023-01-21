@@ -32,11 +32,11 @@ final class NotesCell: UITableViewCell, Identifiable {
     }
 
     private func setup() {
-        addConstraints()
+        addSubviews()
         configureSubviews()
     }
 
-    private func addConstraints() {
+    private func addSubviews() {
         addSubview(noteLabel)
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
 
