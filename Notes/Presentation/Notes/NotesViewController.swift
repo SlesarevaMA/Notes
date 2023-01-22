@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 private enum LocalMetrics {
     static let plusButtonWidth: CGFloat = 50
     static let headerHeight: CGFloat = 28
     static let headerTitleLableXposition: CGFloat = 10
+    static let spacing: CGFloat = 12
 
     static let backgroundColor: UIColor = .init(hex: 0xFBF8E8)
 
@@ -23,13 +25,15 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     
     private let tableView = UITableView()
     private let plusButton = UIButton()
-//    private var notes = [String]()
-    private var notes = [
-        "Ты снимаешь вечернее платье, стоя лицом к стене",
-        "И я вижу свежие шрамы на гладкой как бархат спине",
-        "Мне хочется плакать от боли или забыться во сне",
-        "Где твои крылья, которые так нравились мне?"
-    ]
+    private var notes: Results<NoteDBModel>?
+    private var isFirstLaunch = true
+
+//    private var notes = [
+//        "Ты снимаешь вечернее платье, стоя лицом к стене",
+//        "И я вижу свежие шрамы на гладкой как бархат спине",
+//        "Мне хочется плакать от боли или забыться во сне",
+//        "Где твои крылья, которые так нравились мне?"
+//    ]
 
     init(viewControllerFactory: ViewControllerFactory) {
         self.viewControllerFactory = viewControllerFactory
@@ -43,6 +47,12 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         setup()
+        addNoteAtFirstLaunch()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getData()
     }
 
     private func setup() {
@@ -67,7 +77,7 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             plusButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            plusButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            plusButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -LocalMetrics.spacing),
             plusButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
             plusButton.widthAnchor.constraint(equalTo: plusButton.heightAnchor),
             plusButton.widthAnchor.constraint(equalToConstant: LocalMetrics.plusButtonWidth)
@@ -89,10 +99,22 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     }
 
     @objc private func plusButtonTapped() {
-        notes.append(" ")
+        guard let noteViewController = viewControllerFactory?.getDetailViewcotroller() else {
+            return
+        }
 
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        showDetailViewController(noteViewController, sender: nil)
+    }
+
+    private func getData() {
+        notes = Storage.shared.fetchNotes()
+        tableView.reloadData()
+    }
+
+    private func addNoteAtFirstLaunch() {
+        if isFirstLaunch {
+            Storage.shared.addNote(note: NoteDBModel(content: "Ты снимаешь вечернее платье, стоя лицом к стене"))
+            isFirstLaunch = false
         }
     }
 }
@@ -104,9 +126,11 @@ extension NotesViewController: UITableViewDataSource {
             return
         }
 
-        let note = notes[indexPath.row]
+        guard let note = notes?[indexPath.row] else {
+            return
+        }
 
-        noteViewController.configure(with: note)
+        noteViewController.configure(with: note.content)
         showDetailViewController(noteViewController, sender: nil)
     }
 
@@ -130,7 +154,11 @@ extension NotesViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        if let notes {
+            return notes.count
+        } else {
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,9 +169,42 @@ extension NotesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
+        guard let notes else {
+            return UITableViewCell()
+        }
+
         let model = notes[indexPath.row]
-        cell.configure(with: model)
-        
+        cell.configure(with: model.content)
+
         return cell
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        editingStyleForRowAt indexPath: IndexPath
+    ) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        guard let notes else {
+            return
+        }
+
+        guard editingStyle == .delete else {
+            return
+        }
+
+        let note = notes[indexPath.row]
+        Storage.shared.deleteNote(note: note)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+
+        DispatchQueue.main.async {
+            tableView.reloadData()
+        }
     }
 }
