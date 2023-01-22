@@ -26,7 +26,10 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     private let tableView = UITableView()
     private let plusButton = UIButton()
     private var notes: Results<NoteDBModel>?
-    private var isFirstLaunch = true
+    private let storage = UserDefaults.standard
+    private var isFirstLaunch: Bool {
+        return !storage.bool(forKey: "isFirstLaunch")
+    }
 
 //    private var notes = [
 //        "Ты снимаешь вечернее платье, стоя лицом к стене",
@@ -114,7 +117,7 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     private func addNoteAtFirstLaunch() {
         if isFirstLaunch {
             Storage.shared.addNote(note: NoteDBModel(content: "Ты снимаешь вечернее платье, стоя лицом к стене"))
-            isFirstLaunch = false
+            storage.set(isFirstLaunch, forKey: "isFirstLaunch")
         }
     }
 }
