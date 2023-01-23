@@ -31,13 +31,6 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
         return !storage.bool(forKey: "isFirstLaunch")
     }
 
-//    private var notes = [
-//        "Ты снимаешь вечернее платье, стоя лицом к стене",
-//        "И я вижу свежие шрамы на гладкой как бархат спине",
-//        "Мне хочется плакать от боли или забыться во сне",
-//        "Где твои крылья, которые так нравились мне?"
-//    ]
-
     init(viewControllerFactory: ViewControllerFactory) {
         self.viewControllerFactory = viewControllerFactory
 
@@ -207,10 +200,10 @@ extension NotesViewController: UITableViewDataSource {
 
         let note = notes[indexPath.row]
         Storage.shared.deleteNote(note: note)
-        tableView.deleteRows(at: [indexPath], with: .fade)
 
-        DispatchQueue.main.async {
-            tableView.reloadData()
-        }
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
+
     }
 }

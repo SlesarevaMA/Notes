@@ -71,9 +71,9 @@ final class NoteViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        let note = Storage.shared.fetchNotes()[0]
+//        let note = Storage.shared.fetchNotes()[0]
 
-//        let note = NoteDBModel(content: noteTextView.text)
+        let note = NoteDBModel(content: noteTextView.text)
 
         Storage.shared.editNote(note: note, newContent: noteTextView.text)
     }

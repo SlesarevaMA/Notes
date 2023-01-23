@@ -40,6 +40,7 @@ class Storage {
     func editNote(note: NoteDBModel, newContent: String) {
         try? realm.write {
             note.content = newContent
+            realm.add(note, update: .modified)
         }
     }
 }
