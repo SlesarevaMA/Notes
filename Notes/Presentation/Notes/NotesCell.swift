@@ -10,8 +10,6 @@ import UIKit
 private enum LocalMetrics {
     static let spacing: CGFloat = 12
 
-    static let backgroundColor: UIColor = .init(hex: 0xFBF8E8)
-
     static let noteLabelFont: UIFont = .boldSystemFont(ofSize: 26)
 }
 
@@ -51,9 +49,10 @@ final class NotesCell: UITableViewCell, Identifiable {
     }
 
     private func configureSubviews() {
-        backgroundColor = LocalMetrics.backgroundColor
+        backgroundColor = GlobalMetrics.backgroundColor
         selectionStyle = .none
 
         noteLabel.font = LocalMetrics.noteLabelFont
+        noteLabel.textColor = GlobalMetrics.textColor
     }
 }

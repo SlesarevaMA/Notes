@@ -36,4 +36,10 @@ class Storage {
             realm.delete(note)
         }
     }
+
+    func editNote(note: NoteDBModel, newContent: String) {
+        try? realm.write {
+            note.content = newContent
+        }
+    }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB43D229297CFF7F00D56465 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43D228297CFF7F00D56465 /* Storage.swift */; };
+		AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */; };
 		ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E3297867A700DDD65B /* AppDelegate.swift */; };
 		ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E5297867A700DDD65B /* SceneDelegate.swift */; };
 		ABAA75E8297867A700DDD65B /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E7297867A700DDD65B /* NotesViewController.swift */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		AB43D228297CFF7F00D56465 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMetrics.swift; sourceTree = "<group>"; };
 		ABAA75E0297867A700DDD65B /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAA75E3297867A700DDD65B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABAA75E5297867A700DDD65B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				ABAA76172979D6D400DDD65B /* Identifiable.swift */,
 				ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */,
+				AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */,
 				ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */,
 				ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */,
+				AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */,
 				ABAA76142979D4BD00DDD65B /* NotesCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

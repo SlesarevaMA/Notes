@@ -14,7 +14,8 @@ private enum LocalMetrics {
 
     static let noteTextViewFont: UIFont = .systemFont(ofSize: 30)
 
-    static let backgroundColor: UIColor = .init(hex: 0xFBF8E8)
+    static let backgroundColor: UIColor = .init(hex: 0xFFCDB2)
+    static let textColor: UIColor = .init(hex: 0x6D6875)
 }
 
 final class NoteViewController: UIViewController {
@@ -43,6 +44,8 @@ final class NoteViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
         let guide = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
@@ -64,12 +67,14 @@ final class NoteViewController: UIViewController {
         noteTextView.backgroundColor = LocalMetrics.backgroundColor
 
         saveButton.setTitle("Сохранить", for: .normal)
-        saveButton.setTitleColor(.black, for: .normal)
+        saveButton.setTitleColor(LocalMetrics.textColor, for: .normal)
     }
 
     @objc private func saveButtonTapped() {
-        let note = NoteDBModel(content: noteTextView.text)
+        let note = Storage.shared.fetchNotes()[0]
 
-        Storage.shared.addNote(note: note)
+//        let note = NoteDBModel(content: noteTextView.text)
+
+        Storage.shared.editNote(note: note, newContent: noteTextView.text)
     }
 }

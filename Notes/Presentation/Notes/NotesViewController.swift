@@ -14,7 +14,7 @@ private enum LocalMetrics {
     static let headerTitleLableXposition: CGFloat = 10
     static let spacing: CGFloat = 12
 
-    static let backgroundColor: UIColor = .init(hex: 0xFBF8E8)
+    static let plusButtonColor: UIColor = .init(hex: 0xE5989B)
 
     static let headerTitleLable: UIFont = .systemFont(ofSize: 30)
 }
@@ -81,7 +81,7 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
 
             plusButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
             plusButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -LocalMetrics.spacing),
-            plusButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+            plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LocalMetrics.spacing),
             plusButton.widthAnchor.constraint(equalTo: plusButton.heightAnchor),
             plusButton.widthAnchor.constraint(equalToConstant: LocalMetrics.plusButtonWidth)
         ])
@@ -95,10 +95,11 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureSubviews() {
-        view.backgroundColor = LocalMetrics.backgroundColor
-        tableView.backgroundColor = LocalMetrics.backgroundColor
+        view.backgroundColor = GlobalMetrics.backgroundColor
+        tableView.backgroundColor = GlobalMetrics.backgroundColor
 
         plusButton.setImage(UIImage(named: "plus"), for: .normal)
+        plusButton.tintColor = LocalMetrics.plusButtonColor
     }
 
     @objc private func plusButtonTapped() {
@@ -148,8 +149,10 @@ extension NotesViewController: UITableViewDataSource {
                 height: header.frame.height
             )
         )
+
         headerTitleLable.text = "Заметки"
         headerTitleLable.font = LocalMetrics.headerTitleLable
+        headerTitleLable.textColor = GlobalMetrics.textColor
 
         header.addSubview(headerTitleLable)
 

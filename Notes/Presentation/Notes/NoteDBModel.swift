@@ -8,8 +8,9 @@
 import RealmSwift
 import Foundation
 
-class NoteDBModel: Object {
-
+final class NoteDBModel: Object, ObjectKeyIdentifiable {
+    
+    @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var content: String = ""
 
     convenience init(content: String) {
