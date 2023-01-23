@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AB43D229297CFF7F00D56465 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43D228297CFF7F00D56465 /* Storage.swift */; };
 		AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */; };
+		AB9C9F09297EE00800705A79 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F08297EE00800705A79 /* Presenter.swift */; };
+		AB9C9F0B297EEBC600705A79 /* NotesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F0A297EEBC600705A79 /* NotesDataSource.swift */; };
 		ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E3297867A700DDD65B /* AppDelegate.swift */; };
 		ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E5297867A700DDD65B /* SceneDelegate.swift */; };
 		ABAA75E8297867A700DDD65B /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E7297867A700DDD65B /* NotesViewController.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		AB43D228297CFF7F00D56465 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMetrics.swift; sourceTree = "<group>"; };
+		AB9C9F08297EE00800705A79 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		AB9C9F0A297EEBC600705A79 /* NotesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDataSource.swift; sourceTree = "<group>"; };
 		ABAA75E0297867A700DDD65B /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAA75E3297867A700DDD65B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABAA75E5297867A700DDD65B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 				ABAA76132979D4BD00DDD65B /* NotesCell.swift */,
 				ABAA76192979FD9600DDD65B /* NoteViewModel.swift */,
 				ABAA7627297CC0DE00DDD65B /* NoteDBModel.swift */,
+				AB9C9F08297EE00800705A79 /* Presenter.swift */,
+				AB9C9F0A297EEBC600705A79 /* NotesDataSource.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -335,10 +341,12 @@
 				ABAA7628297CC0DE00DDD65B /* NoteDBModel.swift in Sources */,
 				ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */,
 				ABAA7623297B8A9B00DDD65B /* UIColor+extension.swift in Sources */,
+				AB9C9F0B297EEBC600705A79 /* NotesDataSource.swift in Sources */,
 				ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */,
 				ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */,
 				ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */,
 				ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */,
+				AB9C9F09297EE00800705A79 /* Presenter.swift in Sources */,
 				AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */,
 				ABAA76142979D4BD00DDD65B /* NotesCell.swift in Sources */,
 			);

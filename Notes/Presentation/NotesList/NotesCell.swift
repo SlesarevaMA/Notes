@@ -13,7 +13,7 @@ private enum LocalMetrics {
     static let noteLabelFont: UIFont = .boldSystemFont(ofSize: 26)
 }
 
-final class NotesCell: UITableViewCell, Identifiable {
+final class NotesCell: UITableViewCell {
 
     private let noteLabel = UILabel()
 

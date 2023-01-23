@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 private enum LocalMetrics {
     static let plusButtonWidth: CGFloat = 50
@@ -19,17 +18,26 @@ private enum LocalMetrics {
     static let headerTitleLable: UIFont = .systemFont(ofSize: 30)
 }
 
-final class NotesViewController: UIViewController, UITableViewDelegate {
+protocol NotesListInput: AnyObject {
+//    func setTableViewDataSource(dataSourse: UITableViewDataSource)
+    var notes: [NoteViewModel] { get set }
+
+    func reloadData()
+}
+
+protocol NotesListOuput: AnyObject {
+    func viewWillAppear()
+}
+
+final class NotesListViewController: UIViewController, UITableViewDelegate, NotesListInput {
+
+    var output: NotesListOuput?
+
+    var notes = [NoteViewModel]()
 
     private weak var viewControllerFactory: ViewControllerFactory?
-    
     private let tableView = UITableView()
     private let plusButton = UIButton()
-    private var notes: Results<NoteDBModel>?
-    private let storage = UserDefaults.standard
-    private var isFirstLaunch: Bool {
-        return !storage.bool(forKey: "isFirstLaunch")
-    }
 
     init(viewControllerFactory: ViewControllerFactory) {
         self.viewControllerFactory = viewControllerFactory
@@ -43,12 +51,16 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         setup()
-        addNoteAtFirstLaunch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getData()
+
+        output?.viewWillAppear()
+    }
+
+    func reloadData() {
+        tableView.reloadData()
     }
 
     private func setup() {
@@ -103,31 +115,28 @@ final class NotesViewController: UIViewController, UITableViewDelegate {
         showDetailViewController(noteViewController, sender: nil)
     }
 
-    private func getData() {
-        notes = Storage.shared.fetchNotes()
-        tableView.reloadData()
-    }
+//    private func getData() {
+//        notes = Storage.shared.fetchNotes()
+//        tableView.reloadData()
+//    }
 
-    private func addNoteAtFirstLaunch() {
-        if isFirstLaunch {
-            Storage.shared.addNote(note: NoteDBModel(content: "Ты снимаешь вечернее платье, стоя лицом к стене"))
-            storage.set(isFirstLaunch, forKey: "isFirstLaunch")
-        }
-    }
+//    private func addNoteAtFirstLaunch() {
+//        if isFirstLaunch {
+//            Storage.shared.addNote(note: NoteDBModel(content: "Ты снимаешь вечернее платье, стоя лицом к стене"))
+//            storage.set(isFirstLaunch, forKey: "isFirstLaunch")
+//        }
+//    }
 }
 
-extension NotesViewController: UITableViewDataSource {
+extension NotesListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let noteViewController = viewControllerFactory?.getDetailViewcotroller() else {
             return
         }
 
-        guard let note = notes?[indexPath.row] else {
-            return
-        }
-
-        noteViewController.configure(with: note.content)
+        let note = notes[indexPath.row]
+        noteViewController.configure(with: note.note)
         showDetailViewController(noteViewController, sender: nil)
     }
 
@@ -153,11 +162,7 @@ extension NotesViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let notes {
-            return notes.count
-        } else {
-            return 0
-        }
+        return notes.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,12 +173,8 @@ extension NotesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        guard let notes else {
-            return UITableViewCell()
-        }
-
         let model = notes[indexPath.row]
-        cell.configure(with: model.content)
+        cell.configure(with: model.note)
 
         return cell
     }
@@ -190,20 +191,16 @@ extension NotesViewController: UITableViewDataSource {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-        guard let notes else {
-            return
-        }
 
         guard editingStyle == .delete else {
             return
         }
 
         let note = notes[indexPath.row]
-        Storage.shared.deleteNote(note: note)
+//        Storage.shared.deleteNote(note: note)
 
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.endUpdates()
-
     }
 }

@@ -38,9 +38,11 @@ class Storage {
     }
 
     func editNote(note: NoteDBModel, newContent: String) {
+        let noteId = note.id
+        let note = realm.object(ofType: NoteDBModel.self, forPrimaryKey: noteId)
+
         try? realm.write {
-            note.content = newContent
-            realm.add(note, update: .modified)
+            note?.content = newContent
         }
     }
 }
