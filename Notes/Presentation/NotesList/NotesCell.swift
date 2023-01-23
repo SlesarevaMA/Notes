@@ -9,8 +9,7 @@ import UIKit
 
 private enum LocalMetrics {
     static let spacing: CGFloat = 12
-
-    static let noteLabelFont: UIFont = .boldSystemFont(ofSize: 26)
+    static let noteLabelFont: UIFont = .systemFont(ofSize: 16)
 }
 
 final class NotesCell: UITableViewCell {
@@ -32,11 +31,12 @@ final class NotesCell: UITableViewCell {
     }
 
     private func setup() {
-        addSubviews()
+        setupSubviews()
         configureSubviews()
     }
 
-    private func addSubviews() {
+    private func setupSubviews() {
+        noteLabel.numberOfLines = 2
         addSubview(noteLabel)
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
 

@@ -8,18 +8,17 @@
 import UIKit
 
 private enum LocalMetrics {
-    static let plusButtonWidth: CGFloat = 50
+    static let plusButtonWidth: CGFloat = 44
     static let headerHeight: CGFloat = 28
     static let headerTitleLableXposition: CGFloat = 10
     static let spacing: CGFloat = 12
 
-    static let plusButtonColor: UIColor = .init(hex: 0xE5989B)
+    static let plusButtonColor: UIColor = .init(hex: 0x6d6875)
 
     static let headerTitleLable: UIFont = .systemFont(ofSize: 30)
 }
 
 protocol NotesListInput: AnyObject {
-//    func setTableViewDataSource(dataSourse: UITableViewDataSource)
     var notes: [NoteViewModel] { get set }
 
     func reloadData()
@@ -27,6 +26,7 @@ protocol NotesListInput: AnyObject {
 
 protocol NotesListOuput: AnyObject {
     func viewWillAppear()
+    func viewDidRemoveNote(at index: Int)
 }
 
 final class NotesListViewController: UIViewController, UITableViewDelegate, NotesListInput {
@@ -64,9 +64,16 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
     }
 
     private func setup() {
+        setupTitle()
         addSubviews()
         prepareTableView()
         configureSubviews()
+    }
+
+    private func setupTitle() {
+        title = "Заметки"
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.prefersLargeTitles = true
     }
 
     private func addSubviews() {
@@ -77,7 +84,7 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
 
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
 
-        let guide = view.safeAreaLayoutGuide
+        let safeArea = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -85,7 +92,7 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             plusButton.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            plusButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -LocalMetrics.spacing),
+            plusButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -LocalMetrics.spacing),
             plusButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LocalMetrics.spacing),
             plusButton.widthAnchor.constraint(equalTo: plusButton.heightAnchor),
             plusButton.widthAnchor.constraint(equalToConstant: LocalMetrics.plusButtonWidth)
@@ -114,18 +121,6 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
 
         showDetailViewController(noteViewController, sender: nil)
     }
-
-//    private func getData() {
-//        notes = Storage.shared.fetchNotes()
-//        tableView.reloadData()
-//    }
-
-//    private func addNoteAtFirstLaunch() {
-//        if isFirstLaunch {
-//            Storage.shared.addNote(note: NoteDBModel(content: "Ты снимаешь вечернее платье, стоя лицом к стене"))
-//            storage.set(isFirstLaunch, forKey: "isFirstLaunch")
-//        }
-//    }
 }
 
 extension NotesListViewController: UITableViewDataSource {
@@ -138,27 +133,6 @@ extension NotesListViewController: UITableViewDataSource {
         let note = notes[indexPath.row]
         noteViewController.configure(with: note.note)
         showDetailViewController(noteViewController, sender: nil)
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: LocalMetrics.headerHeight))
-
-        let headerTitleLable = UILabel(
-            frame: CGRect(
-                x: LocalMetrics.headerTitleLableXposition,
-                y: 0,
-                width: header.frame.width,
-                height: header.frame.height
-            )
-        )
-
-        headerTitleLable.text = "Заметки"
-        headerTitleLable.font = LocalMetrics.headerTitleLable
-        headerTitleLable.textColor = GlobalMetrics.textColor
-
-        header.addSubview(headerTitleLable)
-
-        return header
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -191,16 +165,17 @@ extension NotesListViewController: UITableViewDataSource {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-
         guard editingStyle == .delete else {
             return
         }
 
-        let note = notes[indexPath.row]
-//        Storage.shared.deleteNote(note: note)
+        let index = indexPath.row
+        notes.remove(at: indexPath.row)
 
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.endUpdates()
+
+        output?.viewDidRemoveNote(at: index)
     }
 }

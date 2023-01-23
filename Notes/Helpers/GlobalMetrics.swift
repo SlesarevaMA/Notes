@@ -8,6 +8,6 @@
 import UIKit
 
 struct GlobalMetrics {
-    static let backgroundColor: UIColor = .init(hex: 0x6D6875)
-    static let textColor: UIColor = .init(hex: 0xB5838D)
+    static let backgroundColor: UIColor = .init(hex: 0xffcdb2)
+    static let textColor: UIColor = .init(hex: 0x6d6875)
 }

@@ -10,11 +10,15 @@ import Foundation
 
 final class NoteDBModel: Object, ObjectKeyIdentifiable {
     
-    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted(primaryKey: true) var id: UUID
     @Persisted var content: String = ""
+    @Persisted var date: Date
 
-    convenience init(content: String) {
+    convenience init(content: String, id: UUID = UUID(), date: Date = Date()) {
         self.init()
+
         self.content = content
+        self.id = id
+        self.date = date
     }
 }

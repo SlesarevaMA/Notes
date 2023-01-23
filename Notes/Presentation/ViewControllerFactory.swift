@@ -10,9 +10,15 @@ import UIKit
 final class ViewControllerFactory {
 
     func getMasterViewController() -> UIViewController {
-        let masterController = NotesViewController(viewControllerFactory: self)
+        let listViewController = NotesListViewController(viewControllerFactory: self)
+        let presenter = NotesListPresenterImpl(
+            view: listViewController,
+            settings: SettingsImpl(),
+            storage: Storage.shared
+        )
+        listViewController.output = presenter
 
-        return UINavigationController(rootViewController: masterController)
+        return UINavigationController(rootViewController: listViewController)
     }
 
     func getDetailViewcotroller() -> NoteViewController {

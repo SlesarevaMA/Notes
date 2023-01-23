@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-private enum LocalMetrics {
+private enum Metrics {
     static let saveButtonHeight: CGFloat = 50
     static let spacing: CGFloat = 12
 
@@ -22,6 +22,17 @@ final class NoteViewController: UIViewController {
 
     private let noteTextView = UITextView()
     private let saveButton = UIButton()
+    private let storage: Storage
+
+    init(storage: Storage = Storage.shared) {
+        self.storage = storage
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +54,8 @@ final class NoteViewController: UIViewController {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         
-        let guide = view.safeAreaLayoutGuide
+        let safeArea = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
             noteTextView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -54,27 +63,25 @@ final class NoteViewController: UIViewController {
             noteTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             saveButton.topAnchor.constraint(equalTo: noteTextView.bottomAnchor),
-            saveButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -LocalMetrics.spacing),
-            saveButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-            saveButton.heightAnchor.constraint(equalToConstant: LocalMetrics.saveButtonHeight)
+            saveButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -Metrics.spacing),
+            saveButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            saveButton.heightAnchor.constraint(equalToConstant: Metrics.saveButtonHeight)
         ])
     }
 
     private func configureSubviews() {
-        view.backgroundColor = LocalMetrics.backgroundColor
+        view.backgroundColor = Metrics.backgroundColor
         
-        noteTextView.font = LocalMetrics.noteTextViewFont
-        noteTextView.backgroundColor = LocalMetrics.backgroundColor
+        noteTextView.font = Metrics.noteTextViewFont
+        noteTextView.backgroundColor = Metrics.backgroundColor
 
         saveButton.setTitle("Сохранить", for: .normal)
-        saveButton.setTitleColor(LocalMetrics.textColor, for: .normal)
+        saveButton.setTitleColor(Metrics.textColor, for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
 
     @objc private func saveButtonTapped() {
-//        let note = Storage.shared.fetchNotes()[0]
-
         let note = NoteDBModel(content: noteTextView.text)
-
-        Storage.shared.editNote(note: note, newContent: noteTextView.text)
+        storage.editNote(note: note, newContent: noteTextView.text)
     }
 }

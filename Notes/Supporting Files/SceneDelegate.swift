@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    private let viewControllerFactory = ViewControllerFactory()
+    private let presentationAssembly = PresenationAssembly()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
@@ -19,14 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        let masterViewController = viewControllerFactory.getMasterViewController()
-
-        let splitViewController = UISplitViewController()
-        splitViewController.preferredDisplayMode = .oneBesideSecondary
-        splitViewController.viewControllers = [masterViewController]
-
+        let navigationBarApearance = UINavigationBar.appearance()
+        navigationBarApearance.tintColor = GlobalMetrics.textColor
+        navigationBarApearance.barTintColor = GlobalMetrics.backgroundColor
+        
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = splitViewController
+        window.rootViewController = presentationAssembly.mainScreen()
         window.makeKeyAndVisible()
         self.window = window
     }
