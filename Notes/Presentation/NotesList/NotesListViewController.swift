@@ -26,6 +26,8 @@ protocol NotesListInput: AnyObject {
 
 protocol NotesListOuput: AnyObject {
     func viewWillAppear()
+    func viewDidTapPlusButton()
+    func viewDidTapNote(at index: Int)
     func viewDidRemoveNote(at index: Int)
 }
 
@@ -35,17 +37,8 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
 
     var notes = [NoteViewModel]()
 
-    private weak var viewControllerFactory: ViewControllerFactory?
     private let tableView = UITableView()
     private let plusButton = UIButton()
-
-    init(viewControllerFactory: ViewControllerFactory) {
-        self.viewControllerFactory = viewControllerFactory
-
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,8 +65,6 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
 
     private func setupTitle() {
         title = "Заметки"
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.prefersLargeTitles = true
     }
 
     private func addSubviews() {
@@ -115,24 +106,14 @@ final class NotesListViewController: UIViewController, UITableViewDelegate, Note
     }
 
     @objc private func plusButtonTapped() {
-        guard let noteViewController = viewControllerFactory?.getDetailViewcotroller() else {
-            return
-        }
-
-        showDetailViewController(noteViewController, sender: nil)
+        output?.viewDidTapPlusButton()
     }
 }
 
 extension NotesListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let noteViewController = viewControllerFactory?.getDetailViewcotroller() else {
-            return
-        }
-
-        let note = notes[indexPath.row]
-        noteViewController.configure(with: note.note)
-        showDetailViewController(noteViewController, sender: nil)
+        output?.viewDidTapNote(at: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

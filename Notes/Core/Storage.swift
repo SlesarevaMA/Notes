@@ -11,52 +11,74 @@ import RealmSwift
 final class Storage {
 
     static let shared = Storage()
+
     private let storageQueue = DispatchQueue(label: "com.ritulya.storagequeue")
 
-    private lazy var realm: Realm = {
-        do {
-            let realm = try Realm()
-            return realm
-        } catch let error {
-            fatalError(error.localizedDescription)
-        }
-    }()
-
-    func addNote(note: NoteDBModel) {
-        save {
-            self.realm.add(note)
+    func createNote(text: String) {
+        save { realm in
+            let note = NoteDBModel(content: text)
+            realm.add(note)
         }
     }
 
-    func fetchNotes() -> Results<NoteDBModel> {
-        return realm.objects(NoteDBModel.self)
+    func fetchNotes() -> Results<NoteDBModel>? {
+        return getMany()
     }
 
     func deleteNote(with id: UUID) {
-        if let result = noteModel(by: id) {
-            save {
-                self.realm.delete(result)
+        save { realm in
+            if let note: NoteDBModel = self.get(primaryKey: id) {
+                realm.delete(note)
             }
         }
     }
 
-    func editNote(note: NoteDBModel, newContent: String) {
-        let noteId = note.id
+    func editNote(id: UUID, newContent: String) {
+        save { realm in
+            guard let note: NoteDBModel = self.get(primaryKey: id) else {
+                return
+            }
 
-        save {
-            let note = self.realm.object(ofType: NoteDBModel.self, forPrimaryKey: noteId) ?? NoteDBModel(content: newContent)
             note.content = newContent
-            self.realm.add(note, update: .modified)
+            realm.add(note, update: .modified)
         }
     }
 
-    private func noteModel(by id: UUID) -> NoteDBModel? {
-        return realm.object(ofType: NoteDBModel.self, forPrimaryKey: id)
+    func getNote(id: UUID) -> NoteDBModel? {
+        return get(primaryKey: id)
     }
 
-    private func save(closure: @escaping () -> Void) {
-        storageQueue.async {
-            try? self.realm.write(closure)
+    private func get<T: Object>(primaryKey: UUID) -> T? {
+        guard let realm = try? createRealm() else {
+            return nil
         }
+
+        return realm.object(ofType: T.self, forPrimaryKey: primaryKey)
+    }
+
+    private func getMany<T: RealmFetchable>() -> Results<T>? {
+        guard let realm = try? createRealm() else {
+            return nil
+        }
+
+        return realm.objects(T.self)
+    }
+
+    private func save(closure: @escaping (Realm) -> Void) {
+//        storageQueue.async {
+            do {
+                let realm = try self.createRealm()
+                try realm.write {
+                    closure(realm)
+                }
+            } catch let error {
+                fatalError(error.localizedDescription)
+            }
+//        }
+    }
+
+    private func createRealm() throws -> Realm {
+        let configuration = Realm.Configuration(objectTypes: [NoteDBModel.self])
+        return try Realm(configuration: configuration)
     }
 }

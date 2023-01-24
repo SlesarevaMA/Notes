@@ -23,9 +23,12 @@ final class NoteViewController: UIViewController {
     private let noteTextView = UITextView()
     private let saveButton = UIButton()
     private let storage: Storage
+    private var noteId: UUID?
+    private let router: NotesRouter
 
-    init(storage: Storage = Storage.shared) {
+    init(storage: Storage = Storage.shared, router: NotesRouter) {
         self.storage = storage
+        self.router = router
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,8 +43,12 @@ final class NoteViewController: UIViewController {
         setup()
     }
 
-    func configure(with note: String) {
-        noteTextView.text = note
+    func configure(with id: UUID?) {
+        if let id {
+            let note = storage.getNote(id: id)
+            noteTextView.text = note?.content
+            noteId = id
+        }
     }
 
     private func setup() {
@@ -81,7 +88,15 @@ final class NoteViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        let note = NoteDBModel(content: noteTextView.text)
-        storage.editNote(note: note, newContent: noteTextView.text)
+
+        DispatchQueue.main.async {
+            if let id = self.noteId {
+                self.storage.editNote(id: id, newContent: self.noteTextView.text)
+            } else {
+                self.storage.createNote(text: self.noteTextView.text)
+            }
+
+            self.router.showNotesViewController()
+        }
     }
 }

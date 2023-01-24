@@ -15,10 +15,11 @@ private enum Constants {
 
 final class NotesListPresenterImpl {
 
-    private var models = [NoteDBModel]()
     private weak var view: NotesListInput?
     private let settings: Settings
     private let storage: Storage
+    private let router: NotesRouter
+
     private let presenterQueue = DispatchQueue(label: "com.ritulya.notesPresenterQueue")
 
     private var isFirstLunch: Bool {
@@ -30,19 +31,25 @@ final class NotesListPresenterImpl {
             settings.setValue(value: newValue, for: Constants.firstLaunchKey)
         }
     }
+    private var noteIds = [UUID]()
 
-    init(view: NotesListInput, settings: Settings, storage: Storage) {
+    init(view: NotesListInput, settings: Settings, storage: Storage, router: NotesRouter) {
         self.view = view
         self.settings = settings
         self.storage = storage
+        self.router = router
     }
 
     private func fetchNotes() {
-        let notes = storage.fetchNotes()
-        models = Array(notes)
+        guard let notesResults = storage.fetchNotes() else {
+            return
+        }
+        
+        let notes = Array(notesResults)
             .sorted(by: { $0.date > $1.date })
-        let viewModels = models
-            .map { NoteViewModel(note: $0.content) }
+
+        self.noteIds = notes.map { $0.id }
+        let viewModels = notes.map { NoteViewModel(note: $0.content) }
 
         DispatchQueue.main.async {
             self.view?.notes = viewModels
@@ -52,7 +59,7 @@ final class NotesListPresenterImpl {
 
     private func createFirstNoteIfNeeded() {
         if isFirstLunch {
-            storage.addNote(note: NoteDBModel(content: Constants.defaultNote))
+            storage.createNote(text: Constants.defaultNote)
             isFirstLunch = false
         }
     }
@@ -66,9 +73,18 @@ extension NotesListPresenterImpl: NotesListOuput {
         }
     }
 
+    func viewDidTapPlusButton() {
+        router.showNoteViewController(with: nil)
+    }
+
+    func viewDidTapNote(at index: Int) {
+        let noteId = noteIds[index]
+        router.showNoteViewController(with: noteId)
+    }
+
     func viewDidRemoveNote(at index: Int) {
         presenterQueue.async {
-            let modelId = self.models.remove(at: index).id
+            let modelId = self.noteIds.remove(at: index)
             self.storage.deleteNote(with: modelId)
         }
     }

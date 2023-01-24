@@ -11,7 +11,6 @@
 		AB43D229297CFF7F00D56465 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43D228297CFF7F00D56465 /* Storage.swift */; };
 		AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */; };
 		AB9C9F09297EE00800705A79 /* NotesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F08297EE00800705A79 /* NotesListPresenter.swift */; };
-		AB9C9F0D297EFBB400705A79 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C9F0C297EFBB400705A79 /* PresentationAssembly.swift */; };
 		ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E3297867A700DDD65B /* AppDelegate.swift */; };
 		ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E5297867A700DDD65B /* SceneDelegate.swift */; };
 		ABAA75E8297867A700DDD65B /* NotesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA75E7297867A700DDD65B /* NotesListViewController.swift */; };
@@ -21,7 +20,7 @@
 		ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76172979D6D400DDD65B /* Identifiable.swift */; };
 		ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA76192979FD9600DDD65B /* NoteViewModel.swift */; };
 		ABAA761C297AE12200DDD65B /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA761B297AE12200DDD65B /* NoteViewController.swift */; };
-		ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA761D297B683C00DDD65B /* ViewControllerFactory.swift */; };
+		ABAA761E297B683C00DDD65B /* NotesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA761D297B683C00DDD65B /* NotesRouter.swift */; };
 		ABAA7623297B8A9B00DDD65B /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */; };
 		ABAA7626297C92A300DDD65B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ABAA7625297C92A300DDD65B /* RealmSwift */; };
 		ABAA7628297CC0DE00DDD65B /* NoteDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAA7627297CC0DE00DDD65B /* NoteDBModel.swift */; };
@@ -32,7 +31,6 @@
 		AB43D228297CFF7F00D56465 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		AB9C9F02297E082B00705A79 /* GlobalMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMetrics.swift; sourceTree = "<group>"; };
 		AB9C9F08297EE00800705A79 /* NotesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListPresenter.swift; sourceTree = "<group>"; };
-		AB9C9F0C297EFBB400705A79 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		ABAA75E0297867A700DDD65B /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAA75E3297867A700DDD65B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABAA75E5297867A700DDD65B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,7 +42,7 @@
 		ABAA76172979D6D400DDD65B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		ABAA76192979FD9600DDD65B /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		ABAA761B297AE12200DDD65B /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
-		ABAA761D297B683C00DDD65B /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		ABAA761D297B683C00DDD65B /* NotesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRouter.swift; sourceTree = "<group>"; };
 		ABAA7622297B8A9B00DDD65B /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 		ABAA7627297CC0DE00DDD65B /* NoteDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDBModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,10 +121,9 @@
 		ABAA761F297B738200DDD65B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				ABAA761D297B683C00DDD65B /* ViewControllerFactory.swift */,
+				ABAA761D297B683C00DDD65B /* NotesRouter.swift */,
 				ABAA7620297B73B500DDD65B /* NotesList */,
 				ABAA7621297B742900DDD65B /* Note */,
-				AB9C9F0C297EFBB400705A79 /* PresentationAssembly.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -229,14 +226,13 @@
 				ABAA761C297AE12200DDD65B /* NoteViewController.swift in Sources */,
 				ABAA75E8297867A700DDD65B /* NotesListViewController.swift in Sources */,
 				AB43D229297CFF7F00D56465 /* Storage.swift in Sources */,
-				AB9C9F0D297EFBB400705A79 /* PresentationAssembly.swift in Sources */,
 				ABAA7628297CC0DE00DDD65B /* NoteDBModel.swift in Sources */,
 				ABAA75E4297867A700DDD65B /* AppDelegate.swift in Sources */,
 				ABAA7623297B8A9B00DDD65B /* UIColor+extension.swift in Sources */,
 				ABAA761A2979FD9600DDD65B /* NoteViewModel.swift in Sources */,
 				ABAA75E6297867A700DDD65B /* SceneDelegate.swift in Sources */,
 				AB0B595C297F04F300C4E6A9 /* Settings.swift in Sources */,
-				ABAA761E297B683C00DDD65B /* ViewControllerFactory.swift in Sources */,
+				ABAA761E297B683C00DDD65B /* NotesRouter.swift in Sources */,
 				ABAA76182979D6D400DDD65B /* Identifiable.swift in Sources */,
 				AB9C9F09297EE00800705A79 /* NotesListPresenter.swift in Sources */,
 				AB9C9F03297E082B00705A79 /* GlobalMetrics.swift in Sources */,
