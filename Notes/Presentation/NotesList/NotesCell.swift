@@ -7,9 +7,9 @@
 
 import UIKit
 
-private enum LocalMetrics {
-    static let spacing: CGFloat = 12
-    static let noteLabelFont: UIFont = .systemFont(ofSize: 16)
+private enum Metrics {
+    static let horizontalSpacing: CGFloat = 12
+    static let verticalSpacing: CGFloat = 6
 }
 
 final class NotesCell: UITableViewCell {
@@ -41,10 +41,12 @@ final class NotesCell: UITableViewCell {
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            noteLabel.topAnchor.constraint(equalTo: topAnchor, constant: LocalMetrics.spacing),
-            noteLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LocalMetrics.spacing),
-            noteLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LocalMetrics.spacing),
-            noteLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -LocalMetrics.spacing)
+            noteLabel.topAnchor.constraint(equalTo: topAnchor, constant: Metrics.verticalSpacing),
+            noteLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.horizontalSpacing),
+            noteLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Metrics.verticalSpacing),
+            noteLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.horizontalSpacing),
+
+            noteLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: noteLabel.font.pointSize)
         ])
     }
 
@@ -52,7 +54,7 @@ final class NotesCell: UITableViewCell {
         backgroundColor = GlobalMetrics.backgroundColor
         selectionStyle = .none
 
-        noteLabel.font = LocalMetrics.noteLabelFont
+        noteLabel.font = .preferredFont(forTextStyle: .body)
         noteLabel.textColor = GlobalMetrics.textColor
     }
 }

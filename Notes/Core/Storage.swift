@@ -8,11 +8,15 @@
 import Foundation
 import RealmSwift
 
-final class Storage {
+protocol Storage: AnyObject {
+    func createNote(text: String)
+    func fetchNotes() -> Results<NoteDBModel>?
+    func deleteNote(with id: UUID)
+    func editNote(id: UUID, newContent: String)
+    func getNote(id: UUID) -> NoteDBModel?
+}
 
-    static let shared = Storage()
-
-    private let storageQueue = DispatchQueue(label: "com.ritulya.storagequeue")
+final class StorageImpl: Storage {
 
     func createNote(text: String) {
         save { realm in
@@ -65,16 +69,14 @@ final class Storage {
     }
 
     private func save(closure: @escaping (Realm) -> Void) {
-//        storageQueue.async {
-            do {
-                let realm = try self.createRealm()
-                try realm.write {
-                    closure(realm)
-                }
-            } catch let error {
-                fatalError(error.localizedDescription)
+        do {
+            let realm = try createRealm()
+            try realm.write {
+                closure(realm)
             }
-//        }
+        } catch let error {
+            fatalError(error.localizedDescription)
+        }
     }
 
     private func createRealm() throws -> Realm {

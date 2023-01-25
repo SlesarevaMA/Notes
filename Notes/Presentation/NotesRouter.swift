@@ -17,12 +17,15 @@ protocol NotesRouter: AnyObject {
 final class NotesRouterImpl: NotesRouter {
     let rootViewController = UINavigationController()
 
+    private let storage: Storage = StorageImpl()
+    private let settings: Settings = SettingsImpl()
+
     func showNotesViewController() {
         let listViewController = NotesListViewController()
         let presenter = NotesListPresenterImpl(
             view: listViewController,
-            settings: SettingsImpl(),
-            storage: Storage.shared,
+            settings: settings,
+            storage: storage,
             router: self
         )
         listViewController.output = presenter
@@ -31,7 +34,7 @@ final class NotesRouterImpl: NotesRouter {
     }
 
     func showNoteViewController(with noteId: UUID?) {
-        let noteViewController = NoteViewController(router: self)
+        let noteViewController = NoteViewController(storage: storage)
         noteViewController.configure(with: noteId)
 
         rootViewController.pushViewController(noteViewController, animated: true)
